@@ -68,19 +68,19 @@ class FlaskrTestCase(unittest.TestCase):
                 )
         assert b'Invalid password' in rv.data
 
-        def test_messages(self):
-            """Ensure that user can post messages """
-            self.login(
-                    app.app.config['USERNAME'],
-                    app.app.config['PASSWORD']
-                    )
-            rv = self.app.post('/add', data=dict(
-                title='<Hello>',
-                text ='<strong>HTML</strong> allowed here'
-                ), follow_redirects = True)
-            assert b'No entries here so far' not in rv.data
-            assert b'&lt;Hello&gt;' in rv.data
-            assert b'<strong>HTML</strong> allowed here' in rv.data
+    def test_messages(self):
+        """Ensure that user can post messages """
+        self.login(
+                app.app.config['USERNAME'],
+                app.app.config['PASSWORD']
+            )
+        rv = self.app.post('/add', data=dict(
+            title='<Hello>',
+            text ='<strong>HTML</strong> allowed here'
+            ), follow_redirects = True)
+        assert b'No entries here so far' not in rv.data
+        assert b'&lt;Hello&gt;' in rv.data
+        assert b'<strong>HTML</strong> allowed here' in rv.data
 
 
 
