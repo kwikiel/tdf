@@ -37,7 +37,7 @@ def close_db(error):
 
 
 @app.route('/')
-def show_entries():
+def index():
     """ Seek DB for entries, returns them """
     db = get_db()
     cur = db.execute('select * from entries order by id desc')
@@ -48,7 +48,7 @@ def show_entries():
 def login():
     """ User login/auth/session mgmt"""
     error = None
-    if request.method = "POST":
+    if request.method == "POST":
         if request.form['username'] == app.config['USERNAME'] \
                 and request.form['password'] == app.config['PASSWORD']:
                     session['logged_in'] = True
