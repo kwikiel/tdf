@@ -36,6 +36,36 @@ def close_db(error):
         g.sqlite_db = connect_db()
 
 
+@app.route('/')
+def show_entries():
+    """ Seek DB for entries, returns them """
+    db = get_db()
+    cur = db.execute('select * from entries order by id desc')
+    entries = cur.fetchall()
+    return render_template("index.html", entries=entries)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """ User login/auth/session mgmt"""
+    error = None
+    if request.method = "POST":
+        if request.form['username'] == app.config['USERNAME'] \
+                and request.form['password'] == app.config['PASSWORD']:
+                    session['logged_in'] = True
+                    flash("You were logged in")
+                    return redirect(url_for("index"))
+    else:
+        error = "Invalid username or password"
+    return render_template("login.html", error=error)
+
+@app.route('/logout')
+def logout():
+    """ User mgmt """
+    session.pop('logged_in', None)
+    flash("you were logged out")
+    return redirect(url_for('index'))
+
+
 if __name__ == "__main__":
     init_db()
     app.run()
