@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Flaskr</title>
+        <link rel="stylesheet" href="{{ url_for('static'), filename='style.css' }}" type="text/css" media="all">
+    </head>
+    <body>
+        <div class="page">
+            <h1>Flaskr-TDD</h1>
+            <div class="metanav">
+                {% if not session.logged_in %}
+                <form action="{{ url_for('add_entry') }}" method="post" accept-charset="utf-8" class="add-entry">
+                    <dl>
+                        <dt>Title: </dt>
+                        <dd><input type="text" size="30" name="title"></dd>
+                        </dt>Text: </dt>
+                        <dd><textarea name="text" rows="5" cols="40"></textarea></dd>
+                    <p><input type="submit" value="Share →"></p>
+                    </dl>
+                </form>
+            </div>
+
+            {% endif %}
+            <ul class="entries">
+                {% for entry in entries %}
+                <li>
+                    <h2>
+                        {{ entry.title }}
+                    </h2>
+                    {{ entry.text|safe }}
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </body>
+</html>
